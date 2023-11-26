@@ -9,7 +9,14 @@ public class StarterView {
     private ArrayList<JButton> starterBtns;
     private ArrayList<String> lvl1CreatureNames;
 
-    public StarterView() {
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    private JPanel starterViewPanel;
+
+    public StarterView(JPanel cardPanel, CardLayout cardLayout) {
+
+        this.cardPanel = cardPanel;
+        this.cardLayout = cardLayout;
 
         this.starterBtns = new ArrayList<>();
         this.lvl1CreatureNames = new ArrayList<>();
@@ -24,25 +31,32 @@ public class StarterView {
         this.lvl1CreatureNames.add("Squirpie");
         this.lvl1CreatureNames.add("Chocolite");
         this.lvl1CreatureNames.add("Oshacone");
-
-        JFrame frame = new JFrame("Creaturemon");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
         
+        initializeUI();
+
+        cardPanel.add(starterViewPanel, "StarterView");
+    }
+
+    public void initializeUI() {
+        starterViewPanel = new JPanel(new BorderLayout());
+
         JLabel label = new JLabel("Choose Your Starter Creature");
         label.setHorizontalAlignment(JLabel.CENTER);
-        frame.add(label, BorderLayout.NORTH);
+        starterViewPanel.add(label, BorderLayout.NORTH);
 
-        JPanel panel = new JPanel(new GridLayout(3, 3));
+        JPanel creatureSelectPanel = new JPanel(new GridLayout(3, 3));
 
         for (int i = 0; i < 9; i++) {
             ImageIcon icon = new ImageIcon("media/lvl1_creatures/" + lvl1CreatureNames.get(i) + ".png");
             starterBtns.add(new JButton(icon));
-            panel.add(starterBtns.get(i));
+            creatureSelectPanel.add(starterBtns.get(i));
         }
         
-        frame.add(panel);
-        frame.setVisible(true);
+        starterViewPanel.add(creatureSelectPanel);
+    }
+
+    public void showStarterView() {
+        cardLayout.show(cardPanel, "StarterView");
     }
 
     public void setStarterCreatureBtnActionListener(ActionListener actionListener) {
