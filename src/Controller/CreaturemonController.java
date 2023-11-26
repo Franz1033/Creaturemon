@@ -3,19 +3,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.CreaturemonModel;
-import Views.StarterView;
+import Views.CreaturemonView;
 
 public class CreaturemonController {
 
-	private final StarterView starterView;
+	private final CreaturemonView creaturemonView;
   	private final CreaturemonModel creaturemonModel;
 
-	public CreaturemonController(StarterView starterView, CreaturemonModel creaturemonModel) {
+	public CreaturemonController(CreaturemonView creaturemonView, CreaturemonModel creaturemonModel) {
 
-		this.starterView = starterView;
+		this.creaturemonView = creaturemonView;
     	this.creaturemonModel = creaturemonModel;
 
-		this.starterView.setStarterCreatureBtnActionListener(new ActionListener() {
+		creaturemonView.getStarterView().showStarterView(); // Initially show the starter view
+
+		// Add action listener for selecting starting creature
+		this.creaturemonView.getStarterView().setStarterCreatureBtnActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,8 +64,42 @@ public class CreaturemonController {
 						break;
 					default:
 						break;
-				}				
+				}		
+
+				// Redirect to main menu
+				creaturemonView.getMainMenuView().showMainMenu();
 			}			
+		});
+
+		// Add action listener for menu buttons
+		this.creaturemonView.getMainMenuView().setMainMenuBtnsActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String actionCommand = e.getActionCommand();
+		
+				switch (actionCommand) {
+					case "viewInventoryBtn":
+						System.out.println("User clicked View Inventory!");
+						creaturemonView.getMainMenuView().getInventoryMenuView().showInventoryMenu();
+						break;
+					case "exploreAreaBtn":
+						System.out.println("User clicked Explore Area!");
+						creaturemonView.getMainMenuView().getAreaMenuView().showAreaMenu();
+						break;
+					case "evolveCreatureBtn":
+						System.out.println("User clicked Evolve Creatures!");
+						// Add logic for handling Evolve Creatures action
+						break;
+					case "exitBtn":
+						System.out.println("User clicked Exit!");
+						// Add logic for handling Exit action
+						break;
+					default:
+						break;
+				}
+			}
 		});
 	}
 

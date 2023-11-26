@@ -2,19 +2,29 @@ package Views;
 import javax.swing.*;
 import java.awt.*;
 
-public class SelectAreaMenuView {
-   
-    public SelectAreaMenuView() {
-        JFrame frame = new JFrame("Select Area Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+public class AreaMenuView {
 
-        JPanel panel = new JPanel(new BorderLayout());
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    private JPanel areaMenuViewPanel;
+   
+    public AreaMenuView(JPanel cardPanel, CardLayout cardLayout) {
+
+        this.cardPanel = cardPanel;
+        this.cardLayout = cardLayout;
+        this.areaMenuViewPanel = new JPanel(new BorderLayout());
+
+        initializeUI();
+
+        cardPanel.add(areaMenuViewPanel, "Area Menu View");
+    }
+
+    public void initializeUI() {
 
         // Label at the top
         JLabel label = new JLabel("Select Area Menu");
         label.setHorizontalAlignment(JLabel.CENTER);
-        panel.add(label, BorderLayout.NORTH);
+        areaMenuViewPanel.add(label, BorderLayout.NORTH);
 
         // Panel for buttons stacked vertically
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 0, 5)); // 4 rows, 1 column, vertical gap of 5 pixels
@@ -39,9 +49,10 @@ public class SelectAreaMenuView {
         buttonPanel.add(button4);
 
         // Add button panel to the main panel
-        panel.add(buttonPanel, BorderLayout.CENTER);
+        areaMenuViewPanel.add(buttonPanel, BorderLayout.CENTER);
+    }
 
-        frame.add(panel);
-        frame.setVisible(true);
+    public void showAreaMenu() {
+        cardLayout.show(cardPanel, "Area Menu View");
     }
 }

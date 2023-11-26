@@ -17,6 +17,8 @@ public class Inventory {
 
         if (this.capturedCreatures.size() == 1) 
             activeCreature = creature;
+
+        System.out.println(creature.getName() + " (" + creature + ") has been added to user inventory!");
     }
 
     public void displayCapturedCreatures() {
