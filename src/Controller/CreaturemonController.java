@@ -1,4 +1,5 @@
 package Controller;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,7 +16,7 @@ public class CreaturemonController {
 		this.creaturemonView = creaturemonView;
     	this.creaturemonModel = creaturemonModel;
 
-		creaturemonView.getStarterView().showStarterView(); // Initially show the starter view
+		this.creaturemonView.getStarterView().showStarterView(); // Initially show the starter view
 
 		// Add action listener for selecting starting creature
 		this.creaturemonView.getStarterView().setStarterCreatureBtnActionListener(new ActionListener() {
@@ -71,7 +72,7 @@ public class CreaturemonController {
 			}			
 		});
 
-		// Add action listener for menu buttons
+		// Add action listener for main menu buttons
 		this.creaturemonView.getMainMenuView().setMainMenuBtnsActionListener(new ActionListener() {
 			
 			@Override
@@ -82,11 +83,11 @@ public class CreaturemonController {
 				switch (actionCommand) {
 					case "viewInventoryBtn":
 						System.out.println("User clicked View Inventory!");
-						creaturemonView.getMainMenuView().getInventoryMenuView().showInventoryMenu();
+						creaturemonView.getInventoryMenuView().showInventoryMenu();
 						break;
 					case "exploreAreaBtn":
 						System.out.println("User clicked Explore Area!");
-						creaturemonView.getMainMenuView().getAreaMenuView().showAreaMenu();
+						creaturemonView.getAreaMenuView().showAreaMenu();
 						break;
 					case "evolveCreatureBtn":
 						System.out.println("User clicked Evolve Creatures!");
@@ -94,7 +95,69 @@ public class CreaturemonController {
 						break;
 					case "exitBtn":
 						System.out.println("User clicked Exit!");
-						// Add logic for handling Exit action
+						creaturemonView.dispose();
+						break;
+					default:
+						break;
+				}
+			}
+		});
+
+		// Add action listener for inventory menu buttons
+		this.creaturemonView.getInventoryMenuView().setInventoryMenuBtnsActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String actionCommand = e.getActionCommand();
+		
+				switch (actionCommand) {
+					case "displayMyCreaturesBtn":
+						System.out.println("User clicked Display My Creatures!");
+						creaturemonView.getMyCreaturesView().setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
+						creaturemonView.getMyCreaturesView().initializeUI();
+						creaturemonView.getMyCreaturesView().showMyCreatures();
+						break;
+					case "changeActiveCreatureBtn":
+						System.out.println("User clicked Change Active Creature!");
+						creaturemonView.getChangeActiveCreatureView().setActiveCreature(creaturemonModel.getInventory().getActiveCreature().getName());
+						creaturemonView.getChangeActiveCreatureView().initializeUI();
+						creaturemonView.getChangeActiveCreatureView().showChangeActiveCreatureView();
+						break;
+					case "goBackToMainMenuBtn":
+						System.out.println("User clicked Go Back To Main Menu!");
+						creaturemonView.getMainMenuView().showMainMenu();
+						break;
+					default:
+						break;
+				}
+			}
+		});
+
+		// Add action listener for area menu buttons
+		this.creaturemonView.getAreaMenuView().setAreaMenuBtnsActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String actionCommand = e.getActionCommand();
+		
+				switch (actionCommand) {
+					case "areaTypeOneBtn":
+						System.out.println("User clicked Area Type One!");
+						// Add logic for handling Evolve Creatures action
+						break;
+					case "areaTypeTwoBtn":
+						System.out.println("User clicked Area Type Two!");
+						// Add logic for handling Evolve Creatures action
+						break;
+					case "areaTypeThreeBtn":
+						System.out.println("User clicked Area Type Three!");
+						// Add logic for handling Evolve Creatures action
+						break;
+					case "goBackToMainMenuBtn":
+						System.out.println("User clicked Go Back To Main Menu!");
+						creaturemonView.getMainMenuView().showMainMenu();
 						break;
 					default:
 						break;

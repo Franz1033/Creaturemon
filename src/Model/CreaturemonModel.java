@@ -40,5 +40,9 @@ public class CreaturemonModel {
                 break;
         }
     }
+
+    public Inventory getInventory() {
+        return this.inventory;
+    }
 }
 
