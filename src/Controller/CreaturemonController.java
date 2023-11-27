@@ -116,6 +116,7 @@ public class CreaturemonController {
 						System.out.println("User clicked Display My Creatures!");
 						creaturemonView.getMyCreaturesView().setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
 						creaturemonView.getMyCreaturesView().initializeUI();
+						setMyCreaturesBtnsActionListener();
 						creaturemonView.getMyCreaturesView().showMyCreatures();
 						break;
 					case "changeActiveCreatureBtn":
@@ -158,6 +159,27 @@ public class CreaturemonController {
 					case "goBackToMainMenuBtn":
 						System.out.println("User clicked Go Back To Main Menu!");
 						creaturemonView.getMainMenuView().showMainMenu();
+						break;
+					default:
+						break;
+				}
+			}
+		});
+	}
+
+	public void setMyCreaturesBtnsActionListener() {
+
+		this.creaturemonView.getMyCreaturesView().setMyCreaturesBtnsActionListener(new ActionListener() { 
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String actionCommand = e.getActionCommand();
+		
+				switch (actionCommand) {
+					case "goBackToInventoryMenuBtn":
+						System.out.println("User clicked Go Back To Inventory Menu!");
+						creaturemonView.getInventoryMenuView().showInventoryMenu();
 						break;
 					default:
 						break;
