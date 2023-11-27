@@ -25,6 +25,8 @@ public class Inventory {
 
     public ArrayList<ArrayList<Object>> getListOfCapturedCreatures() {
         
+        listOfCapturedCreatures.clear();
+    
         for (Creature capturedCreature : capturedCreatures) {
             ArrayList<Object> capturedCreatureData = new ArrayList<>();
             capturedCreatureData.add(capturedCreature.getName());
@@ -34,9 +36,10 @@ public class Inventory {
     
             listOfCapturedCreatures.add(capturedCreatureData);
         }
-
+    
         return this.listOfCapturedCreatures;
     }
+    
 
     public Creature getActiveCreature() {
         return this.activeCreature;
