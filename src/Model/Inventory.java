@@ -6,10 +6,12 @@ public class Inventory {
 
     private Creature activeCreature;
     private ArrayList<Creature> capturedCreatures;
+    private ArrayList<ArrayList<Object>> listOfCapturedCreatures;
 
     public Inventory() {
         this.activeCreature = null;
         this.capturedCreatures = new ArrayList<Creature>();
+        this.listOfCapturedCreatures = new ArrayList<>();
     }
 
     public void addCreature(Creature creature) {
@@ -21,10 +23,19 @@ public class Inventory {
         System.out.println(creature.getName() + " (" + creature + ") has been added to user inventory!");
     }
 
-    public void displayCapturedCreatures() {
-        for (Creature c : capturedCreatures) {
-            System.out.println("Creature:" + c);
+    public ArrayList<ArrayList<Object>> getListOfCapturedCreatures() {
+        
+        for (Creature capturedCreature : capturedCreatures) {
+            ArrayList<Object> capturedCreatureData = new ArrayList<>();
+            capturedCreatureData.add(capturedCreature.getName());
+            capturedCreatureData.add(capturedCreature.getType());
+            capturedCreatureData.add(capturedCreature.getFamily());
+            capturedCreatureData.add(capturedCreature.getEvolutionLevel());
+    
+            listOfCapturedCreatures.add(capturedCreatureData);
         }
+
+        return this.listOfCapturedCreatures;
     }
 
     public Creature getActiveCreature() {

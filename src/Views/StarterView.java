@@ -15,11 +15,12 @@ public class StarterView {
 
     public StarterView(JPanel cardPanel, CardLayout cardLayout) {
 
-        this.cardPanel = cardPanel;
-        this.cardLayout = cardLayout;
-
         this.starterBtns = new ArrayList<>();
         this.lvl1CreatureNames = new ArrayList<>();
+
+        this.cardPanel = cardPanel;
+        this.cardLayout = cardLayout;
+        starterViewPanel = new JPanel(new BorderLayout());
 
         // Initilize array with the list of all lvl1 creature names
         this.lvl1CreatureNames.add("Strawander");
@@ -34,12 +35,11 @@ public class StarterView {
         
         initializeUI();
 
-        cardPanel.add(starterViewPanel, "StarterView");
+        cardPanel.add(starterViewPanel, "Starter View");
     }
 
     public void initializeUI() {
-        starterViewPanel = new JPanel(new BorderLayout());
-
+   
         JLabel label = new JLabel("Choose Your Starter Creature");
         label.setHorizontalAlignment(JLabel.CENTER);
         starterViewPanel.add(label, BorderLayout.NORTH);
@@ -55,14 +55,14 @@ public class StarterView {
         starterViewPanel.add(creatureSelectPanel);
     }
 
-    public void showStarterView() {
-        cardLayout.show(cardPanel, "StarterView");
-    }
-
     public void setStarterCreatureBtnActionListener(ActionListener actionListener) {
         for (int i = 0; i < 9; i++) {
             this.starterBtns.get(i).addActionListener(actionListener);
             this.starterBtns.get(i).setActionCommand(lvl1CreatureNames.get(i) + "Btn");
         }
+    }
+
+    public void showStarterView() {
+        cardLayout.show(cardPanel, "StarterView");
     }
 }

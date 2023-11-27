@@ -3,28 +3,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class MainMenuView {
-
-    private final InventoryMenuView inventoryMenuView;
-    private final AreaMenuView areaMenuView;
+public class MainMenuView extends JPanel {
 
     private JButton viewInventoryBtn;
     private JButton exploreAreaBtn;
     private JButton evolveCreatureBtn;
     private JButton exitBtn;
 
+    private JPanel mainMenuViewPanel;
     private CardLayout cardLayout;
     private JPanel cardPanel;
-    private JPanel mainMenuViewPanel;
 
     public MainMenuView(JPanel cardPanel, CardLayout cardLayout) {
 
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
         mainMenuViewPanel = new JPanel(new BorderLayout());
-
-        this.inventoryMenuView = new InventoryMenuView(cardPanel, cardLayout); 
-        this.areaMenuView = new AreaMenuView(cardPanel, cardLayout); 
 
         initializeUI();
 
@@ -50,6 +44,7 @@ public class MainMenuView {
         buttonPanel.add(exitBtn);
 
         mainMenuViewPanel.add(buttonPanel, BorderLayout.CENTER);
+
     }
 
     public void showMainMenu() {
@@ -69,14 +64,6 @@ public class MainMenuView {
 
         this.exitBtn.addActionListener(actionListener);
         this.exitBtn.setActionCommand("exitBtn");
-    }
-
-    public InventoryMenuView getInventoryMenuView() {
-        return this.inventoryMenuView;
-    }
-
-    public AreaMenuView getAreaMenuView() {
-        return this.areaMenuView;
     }
 
 }
