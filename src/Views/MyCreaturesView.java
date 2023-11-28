@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MyCreaturesView implements ListOfCapturedCreatures {
+public class MyCreaturesView implements ListOfCapturedCreatures, GoBackToInventoryMenuBtn  {
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -81,9 +81,8 @@ public class MyCreaturesView implements ListOfCapturedCreatures {
         this.listOfCapturedCreatures = listOfCapturedCreatures;
     }
 
-    public void setMyCreaturesBtnsActionListener(ActionListener actionListener) {
-
+    @Override
+    public void setGoBackToInventoryMenuBtnActionListener(ActionListener actionListener) {
         this.goBackToInventoryMenuBtn.addActionListener(actionListener);
-        this.goBackToInventoryMenuBtn.setActionCommand("goBackToInventoryMenuBtn");
     }
 }
