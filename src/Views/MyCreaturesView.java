@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MyCreaturesView {
+public class MyCreaturesView implements ListOfCapturedCreatures {
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -76,6 +76,7 @@ public class MyCreaturesView {
         cardLayout.show(cardPanel, "My Creatures");
     }
 
+    @Override
     public void setListOfCapturedCreatures(ArrayList<ArrayList<Object>> listOfCapturedCreatures) {
         this.listOfCapturedCreatures = listOfCapturedCreatures;
     }

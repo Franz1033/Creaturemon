@@ -3,6 +3,7 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Model.Creature;
 import Model.CreaturemonModel;
 import Views.CreaturemonView;
 
@@ -121,8 +122,10 @@ public class CreaturemonController {
 						break;
 					case "changeActiveCreatureBtn":
 						System.out.println("User clicked Change Active Creature!");
+						creaturemonView.getChangeActiveCreatureView().setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
 						creaturemonView.getChangeActiveCreatureView().setActiveCreature(creaturemonModel.getInventory().getActiveCreature().getName());
 						creaturemonView.getChangeActiveCreatureView().initializeUI();
+						setChangeActiveCreatureBtnsActionListener();
 						creaturemonView.getChangeActiveCreatureView().showChangeActiveCreatureView();
 						break;
 					case "goBackToMainMenuBtn":
@@ -186,6 +189,41 @@ public class CreaturemonController {
 				}
 			}
 		});
+	}
+
+	public void setChangeActiveCreatureBtnsActionListener() {
+
+		this.creaturemonView.getChangeActiveCreatureView().setGoBackToInventoryMenuBtnActionListener(new ActionListener() { 
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String actionCommand = e.getActionCommand();
+		
+				switch (actionCommand) {
+					case "goBackToInventoryMenuBtn":
+						System.out.println("User clicked Go Back To Inventory Menu!");
+						creaturemonView.getInventoryMenuView().showInventoryMenu();
+						break;
+					default:
+						break;
+				}
+
+			}
+		});
+
+		for (int i = 0; i < this.creaturemonModel.getInventory().getCapturedCreatures().size(); i++) {
+			final int index = i; 
+
+			this.creaturemonView.getChangeActiveCreatureView().setSelectBtnActionListener(new ActionListener() { 
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					creaturemonModel.getInventory().setActiveCreature(creaturemonModel.getInventory().getCapturedCreatures().get(index));
+				}
+
+			}, i);
+		}
 	}
 
 }
