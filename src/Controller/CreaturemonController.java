@@ -172,21 +172,12 @@ public class CreaturemonController {
 
 	public void setMyCreaturesBtnsActionListener() {
 
-		this.creaturemonView.getMyCreaturesView().setMyCreaturesBtnsActionListener(new ActionListener() { 
+		this.creaturemonView.getMyCreaturesView().setGoBackToInventoryMenuBtnActionListener(new ActionListener() { 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String actionCommand = e.getActionCommand();
-		
-				switch (actionCommand) {
-					case "goBackToInventoryMenuBtn":
-						System.out.println("User clicked Go Back To Inventory Menu!");
-						creaturemonView.getInventoryMenuView().showInventoryMenu();
-						break;
-					default:
-						break;
-				}
+				System.out.println("User clicked Go Back To Inventory Menu!");
+				creaturemonView.getInventoryMenuView().showInventoryMenu();
 			}
 		});
 	}
@@ -197,18 +188,8 @@ public class CreaturemonController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				String actionCommand = e.getActionCommand();
-		
-				switch (actionCommand) {
-					case "goBackToInventoryMenuBtn":
-						System.out.println("User clicked Go Back To Inventory Menu!");
-						creaturemonView.getInventoryMenuView().showInventoryMenu();
-						break;
-					default:
-						break;
-				}
-
+				System.out.println("User clicked Go Back To Inventory Menu!");
+				creaturemonView.getInventoryMenuView().showInventoryMenu();
 			}
 		});
 
