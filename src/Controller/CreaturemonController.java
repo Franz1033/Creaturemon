@@ -3,19 +3,28 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Action;
+
 import Model.Creature;
 import Model.CreaturemonModel;
 import Views.CreaturemonView;
+import Views.SelectCreatureView;
 
 public class CreaturemonController {
 
 	private final CreaturemonView creaturemonView;
   	private final CreaturemonModel creaturemonModel;
 
+	private SelectCreatureView selectCreatureView1;
+	private SelectCreatureView selectCreatureView2;
+
 	public CreaturemonController(CreaturemonView creaturemonView, CreaturemonModel creaturemonModel) {
 
 		this.creaturemonView = creaturemonView;
     	this.creaturemonModel = creaturemonModel;
+
+		selectCreatureView1 = new SelectCreatureView("Select First Creature");
+		selectCreatureView2 = new SelectCreatureView("Select Second Creature");
 
 		this.creaturemonView.getStarterView().showStarterView(); // Initially show the starter view
 
@@ -30,6 +39,7 @@ public class CreaturemonController {
 				switch (actionCommand) {
 					case "StrawanderBtn":
 						System.out.println("User chose Strawander!");
+						creaturemonModel.addCreatureToInventory("Strawander");
 						creaturemonModel.addCreatureToInventory("Strawander");
 						break;
 					case "ChocowoolBtn":
@@ -92,7 +102,7 @@ public class CreaturemonController {
 						break;
 					case "evolveCreatureBtn":
 						System.out.println("User clicked Evolve Creatures!");
-						// Add logic for handling Evolve Creatures action
+						creaturemonView.getEvolveCratureView().showEvolveCreatureView();
 						break;
 					case "exitBtn":
 						System.out.println("User clicked Exit!");
@@ -168,6 +178,52 @@ public class CreaturemonController {
 				}
 			}
 		});
+
+		// Add action listner when user selects first creatures when evolving
+		this.creaturemonView.getEvolveCratureView().setCreature1ImageBtnActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("User is selecting first creature to evolve!");
+				selectCreatureView1.closeFrame();
+				selectCreatureView1.setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
+				selectCreatureView1.initializeUI();
+				setSelectCreatureView1CreatureBtnsActionListener();
+			}
+		});
+
+		// Add action listner when user selects first creatures when evolving
+		this.creaturemonView.getEvolveCratureView().setCreature2ImageBtnActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("User is selecting second creature to evolve!");
+				selectCreatureView2.closeFrame();
+				selectCreatureView2.setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
+				selectCreatureView2.initializeUI();
+				setSelectCreatureView2CreatureBtnsActionListener();
+			}
+		});
+
+		// Add action listener to evolve button
+		this.creaturemonView.getEvolveCratureView().setEvolveButtonActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("User clicked evolve button!");
+				creaturemonModel.getInventory().EvolveCreature(); // Try to evolve the creature
+			}
+		});
+
+		// Add action listener so that evolve creature view can go back to main menu
+		this.creaturemonView.getEvolveCratureView().setGoBackToMainMenuButtonActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("User clicked Go Back To Main Menu!");
+				creaturemonView.getMainMenuView().showMainMenu();
+			}
+		});
 	}
 
 	public void setMyCreaturesBtnsActionListener() {
@@ -194,6 +250,7 @@ public class CreaturemonController {
 		});
 
 		for (int i = 0; i < this.creaturemonModel.getInventory().getCapturedCreatures().size(); i++) {
+
 			final int index = i; 
 
 			this.creaturemonView.getChangeActiveCreatureView().setSelectBtnActionListener(new ActionListener() { 
@@ -205,6 +262,37 @@ public class CreaturemonController {
 
 			}, i);
 		}
+	}
+
+	// Button click action listner for the select creature view for evolving the creature
+	public void setSelectCreatureView1CreatureBtnsActionListener() {
+
+		this.selectCreatureView1.setCreatureBtnsActionListener(new ActionListener() {
+			
+			@Override 
+			public void actionPerformed(ActionEvent e) {
+				String actionCommand = e.getActionCommand();
+				creaturemonModel.getInventory().setSelectedCreature1(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)));
+				creaturemonView.getEvolveCratureView().setCreatureImage1(creaturemonModel.getInventory().getSelectedCreature1().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature1().getEvolutionLevel()));
+				selectCreatureView1.closeFrame();
+			}
+		});
+	}
+
+	// Button click action listner for the select creature view for evolving the creature
+	public void setSelectCreatureView2CreatureBtnsActionListener() {
+
+		this.selectCreatureView2.setCreatureBtnsActionListener(new ActionListener() {
+			
+			@Override 
+			public void actionPerformed(ActionEvent e) {
+
+				String actionCommand = e.getActionCommand();
+				creaturemonModel.getInventory().setSelectedCreature2(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)));
+				creaturemonView.getEvolveCratureView().setCreatureImage2(creaturemonModel.getInventory().getSelectedCreature2().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature2().getEvolutionLevel()));
+				selectCreatureView2.closeFrame();
+			}
+		});
 	}
 
 }
