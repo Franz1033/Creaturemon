@@ -39,7 +39,10 @@ public class Inventory {
     
         return this.listOfCapturedCreatures;
     }
-    
+
+    public ArrayList<Creature> getCapturedCreatures() {
+        return this.capturedCreatures;
+    }
 
     public Creature getActiveCreature() {
         return this.activeCreature;
@@ -47,6 +50,7 @@ public class Inventory {
 
     public void setActiveCreature(Creature creature) {
         this.activeCreature = creature;
+        System.out.println(creature.getName() + " (" + creature + ") has been set to active creature!");
     }
 
 }
