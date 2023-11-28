@@ -8,6 +8,9 @@ public class Inventory {
     private ArrayList<Creature> capturedCreatures;
     private ArrayList<ArrayList<Object>> listOfCapturedCreatures;
 
+    Creature selectedCreature1;
+    Creature selectedCreature2;
+
     public Inventory() {
         this.activeCreature = null;
         this.capturedCreatures = new ArrayList<Creature>();
@@ -51,6 +54,76 @@ public class Inventory {
     public void setActiveCreature(Creature creature) {
         this.activeCreature = creature;
         System.out.println(creature.getName() + " (" + creature + ") has been set to active creature!");
+    }
+
+    public void setSelectedCreature1(Creature selectedCreature1) {
+        if (selectedCreature2 == selectedCreature1) {
+            System.out.println("You can't set same creature object!");
+        } else {
+            this.selectedCreature1 = selectedCreature1;
+            System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") has been set as creature 1!");
+        }
+    }
+
+    public void setSelectedCreature2(Creature selectedCreature2) {
+        if (selectedCreature2 == selectedCreature1) {
+            System.out.println("You can't set same creature object!");
+        } else {
+            this.selectedCreature2 = selectedCreature2;
+            System.out.println(selectedCreature2.getName() + " (" + selectedCreature2 + ") has been set as creature 2!");
+        }
+    }
+
+    public Creature getSelectedCreature1() {
+        return this.selectedCreature1;
+    }
+
+    public Creature getSelectedCreature2() {
+        return this.selectedCreature2;
+    }
+
+
+    public void EvolveCreature() {
+
+        // If neither of the selected creatures has been initialized
+        if (selectedCreature1 == null || selectedCreature2 == null) {
+            System.out.println("You didn't fully select creatures yet!");
+        // If creatures don't have the same family
+        } else if (!selectedCreature1.getFamily().equals(selectedCreature2.getFamily())) {
+            System.out.println("Creatures don't have the same family!");
+        // If creatures don't have the same level
+        } else if (selectedCreature1.getEvolutionLevel() != selectedCreature2.getEvolutionLevel()) {
+            System.out.println("Creatures don't have the same level!");
+        // If one or both of the creatures is already maxed
+        } else if (selectedCreature1.getEvolutionLevel() == 3 || selectedCreature2.getEvolutionLevel() == 3) {
+            System.out.println("One or both of the creatures is already maxed!");
+        } else {
+
+            Creature evolvedCreature = null;
+
+            // Evolve the creature
+            for (Creature creature : CreaturemonModel.getAllCreatures()) {
+                if (creature.getFamily().equals(selectedCreature1.getFamily()) && creature.getEvolutionLevel() == (selectedCreature1.getEvolutionLevel() + 1)) {
+                    evolvedCreature = new Creature(
+                        creature.getName(),
+                        creature.getType(),
+                        creature.getFamily(),
+                        creature.getEvolutionLevel() 
+                    );
+                }
+            }
+
+            // Add evolved creature to inventory
+            capturedCreatures.add(evolvedCreature); 
+            System.out.println(evolvedCreature.getName() + " (" + evolvedCreature + ") has been added to inventory!");
+
+            // Remove creatures that were merged
+            capturedCreatures.remove(selectedCreature1);
+            capturedCreatures.remove(selectedCreature2);
+            System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") and " + selectedCreature2.getName() + " (" +
+                               selectedCreature2 + ") has now been removed from the inventory!");
+        }
+
     }
 
 }

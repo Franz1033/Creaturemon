@@ -12,6 +12,7 @@ public class CreaturemonView extends JFrame {
 
     private final InventoryMenuView inventoryMenuView;
     private final AreaMenuView areaMenuView;
+    private final EvolveCreatureView evolveCreatureView;
 
     private MyCreaturesView myCreaturesView;
     private ChangeActiveCreatureView changeActiveCreatureView;
@@ -29,6 +30,7 @@ public class CreaturemonView extends JFrame {
 
         this.inventoryMenuView = new InventoryMenuView(cardPanel, cardLayout);
         this.areaMenuView = new AreaMenuView(cardPanel, cardLayout);
+        this.evolveCreatureView = new EvolveCreatureView(cardPanel, cardLayout);
 
         this.myCreaturesView = new MyCreaturesView(cardPanel, cardLayout);
         this.changeActiveCreatureView = new ChangeActiveCreatureView(cardPanel, cardLayout);
@@ -55,6 +57,10 @@ public class CreaturemonView extends JFrame {
 
     public AreaMenuView getAreaMenuView() {
         return this.areaMenuView;
+    }
+
+    public EvolveCreatureView getEvolveCratureView() {
+        return this.evolveCreatureView;
     }
 
     public MyCreaturesView getMyCreaturesView() {
