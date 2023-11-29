@@ -128,7 +128,6 @@ public class Area {
         if (randomChance <= 40) {
             System.out.println("Creature alert");
             this.battlePhase = new BattlePhase(inventory, creatures, this);
-            //battlePhase.displayBattlePhase();
         }
     }
 
