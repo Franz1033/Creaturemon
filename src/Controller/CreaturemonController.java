@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import Exceptions.OutOfBoundsMovementException;
 import Model.Creature;
 import Model.CreaturemonModel;
 import Views.CreaturemonView;
@@ -307,8 +308,10 @@ public class CreaturemonController {
 						creaturemonView.getAreaTypeOneView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
-
 				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
+					creaturemonView.getAreaTypeOneView().markCell();
+				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
 					creaturemonView.getAreaTypeOneView().markCell();
 				}
@@ -349,15 +352,29 @@ public class CreaturemonController {
 						int newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeTwoView().markCell();
+					} else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_UP) {
+						System.out.println("I moved up!");
+						creaturemonModel.getArea2().displayActiveArea('a');
+						int newCurPos = curPos - 3;
+						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeTwoView().markCell(); 
+					} else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S' || e.getKeyCode() == KeyEvent.VK_DOWN) {
+						System.out.println("I moved down!");
+						creaturemonModel.getArea2().displayActiveArea('d');
+						int newCurPos = curPos + 3;
+						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeTwoView().markCell();
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 						creaturemonView.getAreaTypeTwoView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
-
 				} catch (IndexOutOfBoundsException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
-				}
+				} catch (OutOfBoundsMovementException ex) {
+					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
+					creaturemonView.getAreaTypeTwoView().markCell();
+				} 
 				
             }
 
@@ -382,7 +399,6 @@ public class CreaturemonController {
 				int curPos = creaturemonView.getAreaTypeThreeView().getCurPos();
 
 				try {
-				
 					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
 						System.out.println("I moved left!");
 						creaturemonModel.getArea3().displayActiveArea('a');
@@ -395,15 +411,30 @@ public class CreaturemonController {
 						int newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeThreeView().markCell();
+					} else if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_UP) {
+						System.out.println("I moved up!");
+						creaturemonModel.getArea3().displayActiveArea('a');
+						int newCurPos = curPos - 4;
+						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeThreeView().markCell();
+					} else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S' || e.getKeyCode() == KeyEvent.VK_DOWN) {
+						System.out.println("I moved down!");
+						creaturemonModel.getArea3().displayActiveArea('s');
+						int newCurPos = curPos + 4;
+						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeThreeView().markCell();
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 						creaturemonView.getAreaTypeThreeView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
 
 				} catch (IndexOutOfBoundsException ex) {
-					creaturemonView.getAreaTypeThreeView().setCurPos(curPos);
-					creaturemonView.getAreaTypeThreeView().markCell();
-				}
+					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
+					creaturemonView.getAreaTypeTwoView().markCell();
+				} catch (OutOfBoundsMovementException ex) {
+					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
+					creaturemonView.getAreaTypeTwoView().markCell();
+				} 
 				
             }
 

@@ -3,6 +3,8 @@ package Model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Exceptions.OutOfBoundsMovementException;
+
 /**
  * The Area class represents a game area where a player can move and encounter creatures.
  * It is responsible for displaying the game grid, handling player movements, and triggering battles.
@@ -75,8 +77,7 @@ public class Area {
     /**
      * Displays the active area to the player and handles player movements and interactions.
      */
-    public void displayActiveArea(char opt) {
-        
+    public void displayActiveArea(char opt) throws OutOfBoundsMovementException {
         // valid player movement checker
         if (opt == 'w' && currentPosition > width - 1)
             playerMovement("UP");
@@ -88,10 +89,14 @@ public class Area {
             playerMovement("RIGHT");
         else if (opt == 'm') {
             currentPosition = 0; // Initialize current position back to 0
+        } else {
+            throw new OutOfBoundsMovementException("Invalid movement. Out of bounds.");
         }
-         
+    
         displayAreaGrid();  //displays the grid
     }
+    
+    
 
     /**
      * Handles player movement within the area grid and triggers creature encounters.
