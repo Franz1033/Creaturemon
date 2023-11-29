@@ -27,9 +27,15 @@ public class MainMenuView extends JPanel {
 
     public void initializeUI() {
 
-        JLabel label = new JLabel("Main Menu");
-        label.setHorizontalAlignment(JLabel.CENTER);
-        mainMenuViewPanel.add(label, BorderLayout.NORTH);
+        JPanel titleLabelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titleLabelPanel.setBackground(Color.BLUE);
+        
+        JLabel titleLabel = new JLabel("Main Menu");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24)); 
+        titleLabel.setForeground(Color.WHITE);
+        
+        titleLabelPanel.add(titleLabel);
+        mainMenuViewPanel.add(titleLabelPanel, BorderLayout.NORTH); 
 
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 0, 10));
 

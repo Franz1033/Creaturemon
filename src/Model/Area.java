@@ -76,26 +76,21 @@ public class Area {
      * Displays the active area to the player and handles player movements and interactions.
      */
     public void displayActiveArea(char opt) {
-        boolean isPlaying = true;
-
-        while (isPlaying) {
-            displayAreaGrid();  //displays the grid
-            System.out.println("Choose an Action");
-            
-            // valid player movement checker
-            if (opt == 'w' && currentPosition > width - 1)
-                playerMovement("UP");
-            else if (opt == 'a' && (currentPosition + 1) % width - 1 != 0)
-                playerMovement("LEFT");
-            else if (opt == 's' && currentPosition < height * width - width)
-                playerMovement("DOWN");
-            else if (opt == 'd' && (currentPosition + 1) % width != 0)
-                playerMovement("RIGHT");
-            else if (opt == 'm') {
-                isPlaying = false;
-                currentPosition = 0; // Initialize current position back to 0
-            }
+        
+        // valid player movement checker
+        if (opt == 'w' && currentPosition > width - 1)
+            playerMovement("UP");
+        else if (opt == 'a' && (currentPosition + 1) % width - 1 != 0)
+            playerMovement("LEFT");
+        else if (opt == 's' && currentPosition < height * width - width)
+            playerMovement("DOWN");
+        else if (opt == 'd' && (currentPosition + 1) % width != 0)
+            playerMovement("RIGHT");
+        else if (opt == 'm') {
+            currentPosition = 0; // Initialize current position back to 0
         }
+         
+        displayAreaGrid();  //displays the grid
     }
 
     /**

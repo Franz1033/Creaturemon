@@ -30,7 +30,7 @@ public class SelectCreatureView implements ListOfCapturedCreatures {
         // Clear existing components
         panel.removeAll();
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(300, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

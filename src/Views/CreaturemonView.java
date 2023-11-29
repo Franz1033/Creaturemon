@@ -29,6 +29,14 @@ public class CreaturemonView extends JFrame {
         this.cardLayout = new CardLayout();
         this.cardPanel = new JPanel(cardLayout);
 
+        add(cardPanel);
+        
+        setTitle("Creaturemon");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
         this.starterView = new StarterView(cardPanel, cardLayout);
         this.mainMenuView = new MainMenuView(cardPanel, cardLayout);
 
@@ -42,13 +50,6 @@ public class CreaturemonView extends JFrame {
         this.areaTypeOneView = new AreaTypeOneView(cardPanel, cardLayout);
         this.areaTypeTwoView = new AreaTypeTwoView(cardPanel, cardLayout);
         this.areaTypeThreeView = new AreaTypeThreeView(cardPanel, cardLayout);
-
-        add(cardPanel);
-    
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     public StarterView getStarterView() {

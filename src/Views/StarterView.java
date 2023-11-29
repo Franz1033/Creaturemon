@@ -2,6 +2,7 @@ package Views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 public class StarterView {
@@ -39,21 +40,37 @@ public class StarterView {
     }
 
     public void initializeUI() {
-   
-        JLabel label = new JLabel("Choose Your Starter Creature");
-        label.setHorizontalAlignment(JLabel.CENTER);
-        starterViewPanel.add(label, BorderLayout.NORTH);
-
+        JPanel titleLabelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titleLabelPanel.setBackground(Color.BLUE);
+    
+        JLabel titleLabel = new JLabel("Select Starter Creature");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+        titleLabel.setForeground(Color.WHITE);
+    
+        titleLabelPanel.add(titleLabel);
+        starterViewPanel.add(titleLabelPanel, BorderLayout.NORTH);
+    
         JPanel creatureSelectPanel = new JPanel(new GridLayout(3, 3));
-
+    
         for (int i = 0; i < 9; i++) {
+            JPanel creaturePanel = new JPanel(new BorderLayout());
             ImageIcon icon = new ImageIcon("media/lvl1_creatures/" + lvl1CreatureNames.get(i) + ".png");
-            starterBtns.add(new JButton(icon));
-            creatureSelectPanel.add(starterBtns.get(i));
+            JButton button = new JButton(icon);
+            button.setOpaque(true);
+    
+            JLabel label = new JLabel(lvl1CreatureNames.get(i), JLabel.CENTER);
+            label.setForeground(Color.BLACK);
+    
+            creaturePanel.add(button, BorderLayout.CENTER);
+            creaturePanel.add(label, BorderLayout.SOUTH);
+    
+            creatureSelectPanel.add(creaturePanel);
+    
+            starterBtns.add(button);
         }
-        
+    
         starterViewPanel.add(creatureSelectPanel);
-    }
+    }    
 
     public void setStarterCreatureBtnActionListener(ActionListener actionListener) {
         for (int i = 0; i < 9; i++) {
@@ -62,6 +79,22 @@ public class StarterView {
         }
     }
 
+    public void setStarterCreatureBtnMouseListener(MouseAdapter mouseAdapter) {
+        for (int i = 0; i < 9; i++) {
+            this.starterBtns.get(i).addMouseListener(mouseAdapter);
+        }
+    }
+
+    public void changeBtnBackgroundColor(String actionCommand, Color color) {
+        for (int i = 0; i < starterBtns.size(); i++) {
+            if (starterBtns.get(i).getActionCommand().equals(actionCommand)) {
+                starterBtns.get(i).setBackground(color);
+                starterBtns.get(i).setBorder(null);
+                break;
+            }
+        }
+    }
+    
     public void showStarterView() {
         cardLayout.show(cardPanel, "StarterView");
     }

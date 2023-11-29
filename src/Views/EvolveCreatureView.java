@@ -3,6 +3,8 @@ package Views;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
@@ -45,7 +47,15 @@ public class EvolveCreatureView {
 
     public void initializeUI() {
    
-        JLabel titleLabel = new JLabel("Creature Evolution");
+        JPanel titleLabelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titleLabelPanel.setBackground(Color.BLUE);
+        
+        JLabel titleLabel = new JLabel("Evolve Creatures");
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24)); 
+        titleLabel.setForeground(Color.WHITE);
+        
+        titleLabelPanel.add(titleLabel);
+        evolveCreatureViewPanel.add(titleLabelPanel, BorderLayout.NORTH); 
 
         // Create panel for evolving
         JPanel creaturesPanel = new JPanel(new GridBagLayout());
@@ -89,7 +99,7 @@ public class EvolveCreatureView {
         goBackToMainMenuBtn = new JButton("Go back");
         goBackToMainMenuBtn.setOpaque(true);
         goBackToMainMenuBtn.setBorderPainted(false);
-        goBackToMainMenuBtn.setBackground(Color.BLUE);
+        goBackToMainMenuBtn.setBackground(Color.ORANGE);
         goBackToMainMenuBtn.setForeground(Color.WHITE);
         goBackToMainMenuBtn.setMargin(new Insets(10, 20, 10, 20));
 
@@ -97,7 +107,6 @@ public class EvolveCreatureView {
         otherButtonsPanel.add(goBackToMainMenuBtn);
    
         // Set layout and add components to the main panel
-        evolveCreatureViewPanel.add(titleLabel, BorderLayout.NORTH);
         evolveCreatureViewPanel.add(creaturesPanel, BorderLayout.CENTER);
         evolveCreatureViewPanel.add(otherButtonsPanel, BorderLayout.SOUTH);
 
