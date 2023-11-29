@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import Exceptions.CreatureAlertException;
 import Exceptions.OutOfBoundsMovementException;
 import Model.Creature;
 import Model.CreaturemonModel;
@@ -311,6 +312,17 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
 					creaturemonView.getAreaTypeOneView().markCell();
+				} catch (CreatureAlertException e1) {
+					System.out.println("You encountereed a creature!");
+					creaturemonModel.createBattlePhase(1);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
 				}
 				
             }
@@ -368,6 +380,18 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
+				} catch (CreatureAlertException e1) {
+					System.out.println("You encountereed a creature!");
+					creaturemonModel.createBattlePhase(2);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
+
 				} 
 				
             }
@@ -425,6 +449,16 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
+				} catch (CreatureAlertException e1) {
+					creaturemonModel.createBattlePhase(3);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
 				} 
 				
             }
@@ -518,4 +552,42 @@ public class CreaturemonController {
 		});
 	}
 
+	public void setBattlePhaseViewActionListener() {
+		
+		this.creaturemonView.getBattlePhaseView().setBattlePhaseViewActionListener(new ActionListener() {
+			
+			@Override 
+			public void actionPerformed(ActionEvent e) {
+				String command = e.getActionCommand();
+			
+				switch (command) {
+					case "attackBtn":
+						System.out.println("Attack button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(1);
+						break;
+			
+					case "swapBtn":
+						System.out.println("Swap button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(2);
+						break;
+			
+					case "catchBtn":
+						System.out.println("Catch button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(3);
+						break;
+			
+					case "runBtn":
+						System.out.println("Run button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(4);
+						creaturemonView.getMainMenuView().showMainMenu();
+						break;
+			
+					default:
+						// Handle default case
+						break;
+				}
+			}
+			
+		});
+	}
 }

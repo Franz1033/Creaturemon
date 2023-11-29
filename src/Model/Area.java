@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Exceptions.CreatureAlertException;
 import Exceptions.OutOfBoundsMovementException;
 
 /**
@@ -76,8 +77,9 @@ public class Area {
 
     /**
      * Displays the active area to the player and handles player movements and interactions.
+     * @throws CreatureAlertException
      */
-    public void displayActiveArea(char opt) throws OutOfBoundsMovementException {
+    public void displayActiveArea(char opt) throws OutOfBoundsMovementException, CreatureAlertException {
         // valid player movement checker
         if (opt == 'w' && currentPosition > width - 1)
             playerMovement("UP");
@@ -95,15 +97,14 @@ public class Area {
     
         displayAreaGrid();  //displays the grid
     }
-    
-    
 
     /**
      * Handles player movement within the area grid and triggers creature encounters.
      * @param direction 
      *     The direction in which the player wants to move ('UP', 'LEFT', 'DOWN', 'RIGHT').
+     * @throws CreatureAlertException
      */
-    public void playerMovement(String direction){
+    public void playerMovement(String direction) throws CreatureAlertException{
         
         if (direction == "UP")
             currentPosition -= width;
@@ -119,16 +120,24 @@ public class Area {
 
     /**
      * Simulates a creature encounter based on a 40% chance and triggers a battle if applicable.
+     * @throws CreatureAlertException
      */
-    public void encounter() {
+    public void encounter() throws CreatureAlertException {
 
         int randomChance = new Random().nextInt(100) + 1;
 
         // 40% chance of encountering a creature
         if (randomChance <= 40) {
             System.out.println("Creature alert");
-            this.battlePhase = new BattlePhase(inventory, creatures, this);
+            throw new CreatureAlertException("Creature encountered!");
         }
+    }
+
+    /**
+     * Handles instatiation when a creature is encountered
+     */
+    public void handleCreatureEncounter() {
+        this.battlePhase = new BattlePhase(inventory, creatures, this);
     }
 
     /**
