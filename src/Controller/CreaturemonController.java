@@ -314,8 +314,14 @@ public class CreaturemonController {
 					creaturemonView.getAreaTypeOneView().markCell();
 				} catch (CreatureAlertException e1) {
 					System.out.println("You encountereed a creature!");
-					creaturemonModel.getArea1().handleCreatureEncounter();
-					creaturemonModel.getArea1().getBattlePhase();
+					creaturemonModel.createBattlePhase(1);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
 				}
 				
             }
@@ -374,8 +380,16 @@ public class CreaturemonController {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
 				} catch (CreatureAlertException e1) {
-					creaturemonModel.getArea2().handleCreatureEncounter();
-					creaturemonModel.getArea2().getBattlePhase();
+					System.out.println("You encountereed a creature!");
+					creaturemonModel.createBattlePhase(2);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
+
 				} 
 				
             }
@@ -434,8 +448,14 @@ public class CreaturemonController {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
 				} catch (CreatureAlertException e1) {
-					creaturemonModel.getArea3().handleCreatureEncounter();
-					creaturemonModel.getArea3().getBattlePhase();
+					creaturemonModel.createBattlePhase(3);
+					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
+																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
+																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().createAndShowGUI();
+					creaturemonView.getBattlePhaseView().showBattlePhaseView();
+					setBattlePhaseViewActionListener();
 				} 
 				
             }
@@ -529,4 +549,41 @@ public class CreaturemonController {
 		});
 	}
 
+	public void setBattlePhaseViewActionListener() {
+		
+		this.creaturemonView.getBattlePhaseView().setBattlePhaseViewActionListener(new ActionListener() {
+			
+			@Override 
+			public void actionPerformed(ActionEvent e) {
+				String command = e.getActionCommand();
+			
+				switch (command) {
+					case "attackBtn":
+						System.out.println("Attack button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(1);
+						break;
+			
+					case "swapBtn":
+						System.out.println("Swap button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(2);
+						break;
+			
+					case "catchBtn":
+						System.out.println("Catch button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(3);
+						break;
+			
+					case "runBtn":
+						System.out.println("Run button clicked!");
+						creaturemonModel.getBattlePhase().displayBattlePhase(4);
+						break;
+			
+					default:
+						// Handle default case
+						break;
+				}
+			}
+			
+		});
+	}
 }

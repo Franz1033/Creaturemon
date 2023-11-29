@@ -11,12 +11,18 @@ public class CreaturemonModel {
     private Area area2;
     private Area area3;
 
+    BattlePhase battlePhase;
+
+    ArrayList<Creature> levelOneCreatures;
+    ArrayList<Creature> levelTwoCreatures;
+    ArrayList<Creature> levelThreeCreatures;
+
     public CreaturemonModel() {
         this.inventory = new Inventory();
-
-        ArrayList<Creature> levelOneCreatures = new ArrayList<Creature>();
-        ArrayList<Creature> levelTwoCreatures = new ArrayList<Creature>();
-        ArrayList<Creature> levelThreeCreatures = new ArrayList<Creature>();
+    
+        levelOneCreatures = new ArrayList<Creature>();
+        levelTwoCreatures = new ArrayList<Creature>();
+        levelThreeCreatures = new ArrayList<Creature>();
 
         area1 = new Area(inventory, levelOneCreatures, 5, 1);
         area2 = new Area(inventory, levelTwoCreatures, 3, 3);
@@ -173,6 +179,20 @@ public class CreaturemonModel {
 
     public Area getArea3() {
         return this.area3;
+    }
+
+    public void createBattlePhase(int areaNum) {
+        if (areaNum == 1) {
+            battlePhase = new BattlePhase(inventory, levelOneCreatures, area1);
+        } else if (areaNum == 2) {
+            battlePhase = new BattlePhase(inventory, levelTwoCreatures, area2);
+        } else if (areaNum == 3) {
+            battlePhase = new BattlePhase(inventory, levelThreeCreatures, area3);
+        }
+    }
+
+    public BattlePhase getBattlePhase() {
+        return this.battlePhase;
     }
 
 }

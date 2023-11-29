@@ -20,6 +20,7 @@ public class CreaturemonView extends JFrame {
     private AreaTypeOneView areaTypeOneView;
     private AreaTypeTwoView areaTypeTwoView;
     private AreaTypeThreeView areaTypeThreeView;
+    private BattlePhaseView battlePhaseView;
 
     private CardLayout cardLayout;
     private JPanel cardPanel;
@@ -50,6 +51,7 @@ public class CreaturemonView extends JFrame {
         this.areaTypeOneView = new AreaTypeOneView(cardPanel, cardLayout);
         this.areaTypeTwoView = new AreaTypeTwoView(cardPanel, cardLayout);
         this.areaTypeThreeView = new AreaTypeThreeView(cardPanel, cardLayout);
+        this.battlePhaseView = new BattlePhaseView(cardPanel, cardLayout);
     }
 
     public StarterView getStarterView() {
@@ -90,6 +92,10 @@ public class CreaturemonView extends JFrame {
 
     public AreaTypeThreeView getAreaTypeThreeView() {
         return this.areaTypeThreeView;
+    }
+
+    public BattlePhaseView getBattlePhaseView() {
+        return this.battlePhaseView;
     }
 
 }

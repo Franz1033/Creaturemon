@@ -2,41 +2,63 @@ package Views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class BattlePhaseView {
 
-    private JFrame battleFrame;
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    private JPanel battlePhaseViewPanel;
+
     private JPanel activeCreaturePanel;
     private JPanel enemyCreaturePanel;
     private JPanel controlPanel;
 
-    public BattlePhaseView() {
-        createAndShowGUI();
+    private String enemyCreatureName;
+    private String activeCreatureName;
+
+    private String enemyCreatureLvl;
+    private String activeCreatureLvl;
+
+    JButton attackButton;
+    JButton swapButton;
+    JButton catchButton;
+    JButton runButton;
+
+    public BattlePhaseView(JPanel cardPanel, CardLayout cardLayout) {
+
+        this.cardPanel = cardPanel;
+        this.cardLayout = cardLayout;
+        this.battlePhaseViewPanel = new JPanel(new BorderLayout());
+
+        cardPanel.add(battlePhaseViewPanel, "Battle Phase View");
     }
 
-    private void createAndShowGUI() {
-        battleFrame = new JFrame("Battle Phase");
-        battleFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void showBattlePhaseView() {
+        cardLayout.show(cardPanel, "Battle Phase View");
+    }
+
+    public void setEnemyCreatureNameAndLvl(String name, String lvl) {
+        this.enemyCreatureName = name;
+        this.enemyCreatureLvl = lvl;
+    }
+
+    public void setActiveCreatureNameAndLvl(String name, String lvl) {
+        this.activeCreatureName = name;
+        this.activeCreatureLvl= lvl;
+    }
+
+    public void createAndShowGUI() {
     
-        // Get the content pane of the frame
-        Container contentPane = battleFrame.getContentPane();
-        contentPane.setLayout(new BorderLayout());
-    
-        activeCreaturePanel = createCreaturePanel("Active Creature Name", "1");
-        enemyCreaturePanel = createCreaturePanel("Enemy Creature Name", "2");
+        activeCreaturePanel = createCreaturePanel(activeCreatureName, activeCreatureLvl);
+        enemyCreaturePanel = createCreaturePanel(enemyCreatureName, enemyCreatureLvl);
         controlPanel = createControlPanel();
     
-        // Add an empty border to the content pane
-        ((JComponent) contentPane).setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-    
-        contentPane.add(activeCreaturePanel, BorderLayout.WEST);
-        contentPane.add(enemyCreaturePanel, BorderLayout.EAST);
-        contentPane.add(controlPanel, BorderLayout.SOUTH);
-    
-        battleFrame.setSize(800, 600);
-        battleFrame.setLocationRelativeTo(null);
-        battleFrame.setVisible(true);
+        battlePhaseViewPanel.add(activeCreaturePanel, BorderLayout.WEST);
+        battlePhaseViewPanel.add(enemyCreaturePanel, BorderLayout.EAST);
+        battlePhaseViewPanel.add(controlPanel, BorderLayout.SOUTH);
     }
+
     private JPanel createCreaturePanel(String creatureName, String evolutionLevel) {
         JPanel creaturePanel = new JPanel(new GridBagLayout());
         creaturePanel.setPreferredSize(new Dimension(200, 100)); // Set fixed size
@@ -67,10 +89,10 @@ public class BattlePhaseView {
     private JPanel createControlPanel() {
         JPanel controlPanel = new JPanel(new GridLayout(1, 4, 10, 10)); // Adding horizontal and vertical gaps
         
-        JButton attackButton = new JButton("Attack");
-        JButton swapButton = new JButton("Swap");
-        JButton catchButton = new JButton("Catch");
-        JButton runButton = new JButton("Run");
+        attackButton = new JButton("Attack");
+        swapButton = new JButton("Swap");
+        catchButton = new JButton("Catch");
+        runButton = new JButton("Run");
         
         controlPanel.add(attackButton);
         controlPanel.add(swapButton);
@@ -82,9 +104,18 @@ public class BattlePhaseView {
     
         return controlPanel;
     }
-       
+    
+    public void setBattlePhaseViewActionListener(ActionListener actionListener) {
+        this.attackButton.addActionListener(actionListener);
+        this.attackButton.setActionCommand("attackBtn");
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new BattlePhaseView());
+        this.swapButton.addActionListener(actionListener);
+        this.swapButton.setActionCommand("swapBtn");
+
+        this.catchButton.addActionListener(actionListener);
+        this.catchButton.setActionCommand("catchBtn");
+
+        this.runButton.addActionListener(actionListener);
+        this.runButton.setActionCommand("runBtn");
     }
 }
