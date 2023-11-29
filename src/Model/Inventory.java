@@ -51,9 +51,15 @@ public class Inventory {
         return this.activeCreature;
     }
 
-    public void setActiveCreature(Creature creature) {
-        this.activeCreature = creature;
-        System.out.println(creature.getName() + " (" + creature + ") has been set to active creature!");
+    public boolean setActiveCreature(Creature creature) {
+        if (creature == activeCreature) {
+            System.out.println("Creature is already active");
+            return true;
+        } else {
+            this.activeCreature = creature;
+            System.out.println(creature.getName() + " (" + creature + ") has been set to active creature!");
+            return false;
+        }
     }
 
     public boolean setSelectedCreature1(Creature selectedCreature1) {
@@ -130,6 +136,9 @@ public class Inventory {
             capturedCreatures.remove(selectedCreature2);
             System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") and " + selectedCreature2.getName() + " (" +
                                selectedCreature2 + ") has now been removed from the inventory!");
+
+            // Set evolved creature as active
+            setActiveCreature(evolvedCreature);
             
             return true;
         }

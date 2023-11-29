@@ -7,6 +7,10 @@ public class CreaturemonModel {
     private final Inventory inventory;
     public static ArrayList<Creature> creatures = new ArrayList<Creature>();
 
+    private Area area1;
+    private Area area2;
+    private Area area3;
+
     public CreaturemonModel() {
         this.inventory = new Inventory();
 
@@ -14,9 +18,9 @@ public class CreaturemonModel {
         ArrayList<Creature> levelTwoCreatures = new ArrayList<Creature>();
         ArrayList<Creature> levelThreeCreatures = new ArrayList<Creature>();
 
-        Area area1 = new Area(inventory, levelOneCreatures, 5, 1);
-        Area area2 = new Area(inventory, levelTwoCreatures, 3, 3);
-        Area area3 = new Area(inventory, levelThreeCreatures, 4, 4);
+        area1 = new Area(inventory, levelOneCreatures, 5, 1);
+        area2 = new Area(inventory, levelTwoCreatures, 3, 3);
+        area3 = new Area(inventory, levelThreeCreatures, 4, 4);
 
         createCreatures(creatures);
         setAreaOneCreatures(creatures, levelOneCreatures);
@@ -157,6 +161,18 @@ public class CreaturemonModel {
 
     public static ArrayList<Creature> getAllCreatures() {
         return creatures;
+    }
+
+    public Area getArea1() {
+        return this.area1;
+    }
+
+    public Area getArea2() {
+        return this.area2;
+    }
+
+    public Area getArea3() {
+        return this.area3;
     }
 
 }

@@ -1,11 +1,17 @@
 package Controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
 
 import Model.Creature;
 import Model.CreaturemonModel;
@@ -42,11 +48,12 @@ public class CreaturemonController {
 					case "StrawanderBtn":
 						System.out.println("User chose Strawander!");
 						creaturemonModel.addCreatureToInventory("Strawander");
+						creaturemonModel.addCreatureToInventory("Chocowool");
 						creaturemonModel.addCreatureToInventory("Strawander");
+						creaturemonModel.addCreatureToInventory("Chocowool");
 						break;
 					case "ChocowoolBtn":
 						System.out.println("User chose Chocowool!");
-						creaturemonModel.addCreatureToInventory("Chocowool");
 						creaturemonModel.addCreatureToInventory("Chocowool");
 						break;
 					case "ParfwitBtn":
@@ -84,6 +91,27 @@ public class CreaturemonController {
 				// Redirect to main menu
 				creaturemonView.getMainMenuView().showMainMenu();
 			}			
+		});
+
+		// Add mouse listener for select starter creature view
+		this.creaturemonView.getStarterView().setStarterCreatureBtnMouseListener(new java.awt.event.MouseAdapter() {
+			private Color originalColor;
+			private Border originalBorder;
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				JButton source = (JButton) evt.getSource();
+				originalColor = source.getBackground();
+				originalBorder = source.getBorder();
+				creaturemonView.getStarterView().changeBtnBackgroundColor(source.getActionCommand(), new Color(144, 238, 144)); 
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				JButton source = (JButton) evt.getSource();
+				source.setBackground(originalColor);
+				source.setBorder(originalBorder);
+			}
 		});
 
 		// Add action listener for main menu buttons
@@ -162,17 +190,27 @@ public class CreaturemonController {
 				switch (actionCommand) {
 					case "areaTypeOneBtn":
 						System.out.println("User clicked Area Type One!");
+						creaturemonModel.getArea1().displayAreaGrid();
 						creaturemonView.getAreaTypeOneView().setImageIcon(creaturemonModel.getInventory().getActiveCreature().getName(), String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
 						creaturemonView.getAreaTypeOneView().markCell();
 						creaturemonView.getAreaTypeOneView().showAreaTypeOneView();
+						creaturemonView.getAreaTypeOneView().requestFocusOnArea();
 						break;
 					case "areaTypeTwoBtn":
 						System.out.println("User clicked Area Type Two!");
+						creaturemonModel.getArea2().displayAreaGrid();
+						creaturemonView.getAreaTypeTwoView().setImageIcon(creaturemonModel.getInventory().getActiveCreature().getName(), String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
+						creaturemonView.getAreaTypeTwoView().markCell();
 						creaturemonView.getAreaTypeTwoView().showAreaTypeTwoView();
+						creaturemonView.getAreaTypeTwoView().requestFocusOnArea();
 						break;
 					case "areaTypeThreeBtn":
 						System.out.println("User clicked Area Type Three!");
+						creaturemonModel.getArea3().displayAreaGrid();
+						creaturemonView.getAreaTypeThreeView().setImageIcon(creaturemonModel.getInventory().getActiveCreature().getName(), String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
+						creaturemonView.getAreaTypeThreeView().markCell();
 						creaturemonView.getAreaTypeThreeView().showAreaTypeThreeView();
+						creaturemonView.getAreaTypeThreeView().requestFocusOnArea();
 						break;
 					case "goBackToMainMenuBtn":
 						System.out.println("User clicked Go Back To Main Menu!");
@@ -237,7 +275,7 @@ public class CreaturemonController {
 			}
 		});
 
-		// Controls for area type 1
+		// Controls for explore area type 1
 		this.creaturemonView.getAreaTypeOneView().setAreaTypeOneViewKeyListener(new KeyListener() {
 			
 			@Override
@@ -247,18 +285,22 @@ public class CreaturemonController {
 
             @Override
             public void keyPressed(KeyEvent e) {
+				creaturemonView.getAreaTypeOneView();
+
+				int curPos = creaturemonView.getAreaTypeOneView().getCurPos();
 
 				try {
 				
-					if (e.getKeyChar() == 'a' || e.getKeyCode() == KeyEvent.VK_LEFT) {
+					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
 						System.out.println("I moved left!");
-						int newCurPos = creaturemonView.getAreaTypeOneView().getCurPos() - 1;
+						creaturemonModel.getArea1().displayActiveArea('a');
+						int newCurPos = curPos - 1;
 						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeOneView().markCell();
-
-					} else if (e.getKeyChar() == 'd' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						System.out.println("I moved right!");
-						int newCurPos = creaturemonView.getAreaTypeOneView().getCurPos() + 1;
+						creaturemonModel.getArea1().displayActiveArea('d');
+						int newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeOneView().markCell();
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -267,8 +309,100 @@ public class CreaturemonController {
 					}
 
 				} catch (IndexOutOfBoundsException ex) {
-					System.err.println("IndexOutOfBoundsException: " + ex.getMessage());
-					System.err.println("Invalid index after moving right: " + creaturemonView.getAreaTypeOneView().getCurPos());
+					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
+					creaturemonView.getAreaTypeOneView().markCell();
+				}
+				
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+               
+            }
+		});
+		
+		// Controls explore for area type 2
+		this.creaturemonView.getAreaTypeTwoView().setAreaTypeOneViewKeyListener(new KeyListener() {
+			
+			@Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+				creaturemonView.getAreaTypeTwoView();
+
+				int curPos = creaturemonView.getAreaTypeTwoView().getCurPos();
+
+				try {
+				
+					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
+						System.out.println("I moved left!");
+						creaturemonModel.getArea2().displayActiveArea('a');
+						int newCurPos = curPos - 1;
+						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeTwoView().markCell();
+					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+						System.out.println("I moved right!");
+						creaturemonModel.getArea2().displayActiveArea('d');
+						int newCurPos = curPos + 1;
+						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeTwoView().markCell();
+					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+						creaturemonView.getAreaTypeTwoView().setCurPos(0);
+						creaturemonView.getMainMenuView().showMainMenu();
+					}
+
+				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
+					creaturemonView.getAreaTypeTwoView().markCell();
+				}
+				
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+               
+            }
+		});
+
+		// Controls for explore area type 3
+		this.creaturemonView.getAreaTypeThreeView().setAreaTypeOneViewKeyListener(new KeyListener() {
+			
+			@Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+				creaturemonView.getAreaTypeThreeView();
+
+				int curPos = creaturemonView.getAreaTypeThreeView().getCurPos();
+
+				try {
+				
+					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
+						System.out.println("I moved left!");
+						creaturemonModel.getArea3().displayActiveArea('a');
+						int newCurPos = curPos - 1;
+						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeThreeView().markCell();
+					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+						System.out.println("I moved right!");
+						creaturemonModel.getArea3().displayActiveArea('d');
+						int newCurPos = curPos + 1;
+						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeThreeView().markCell();
+					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+						creaturemonView.getAreaTypeThreeView().setCurPos(0);
+						creaturemonView.getMainMenuView().showMainMenu();
+					}
+
+				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeThreeView().setCurPos(curPos);
+					creaturemonView.getAreaTypeThreeView().markCell();
 				}
 				
             }
@@ -311,7 +445,16 @@ public class CreaturemonController {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					creaturemonModel.getInventory().setActiveCreature(creaturemonModel.getInventory().getCapturedCreatures().get(index));
+					// If selected creature is already active
+					if (creaturemonModel.getInventory().setActiveCreature(creaturemonModel.getInventory().getCapturedCreatures().get(index))) {
+						JOptionPane.showMessageDialog(null, "Creature is already active!", "Creature Already Active Exception", JOptionPane.ERROR_MESSAGE);					
+					// Else, set that creature as new active creature
+					} else {
+						creaturemonModel.getInventory().setActiveCreature(creaturemonModel.getInventory().getCapturedCreatures().get(index));
+						creaturemonView.getChangeActiveCreatureView().setActiveCreature((creaturemonModel.getInventory().getCapturedCreatures().get(index).getName()));
+						creaturemonView.getChangeActiveCreatureView().updateActiveCreatureLabel(); 
+						JOptionPane.showMessageDialog(null, creaturemonModel.getInventory().getCapturedCreatures().get(index).getName() + " (" + creaturemonModel.getInventory().getCapturedCreatures().get(index) + ") is now the active creature!", "New Active Creature Set!", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 
 			}, i);

@@ -12,6 +12,7 @@ public class ChangeActiveCreatureView implements ListOfCapturedCreatures, GoBack
 
     private String activeCreature;
 
+    private JLabel activeCreatureLabel;
     private ArrayList<ArrayList<Object>> listOfCapturedCreatures;
     private ArrayList<JButton> selectBtns;
 
@@ -21,35 +22,63 @@ public class ChangeActiveCreatureView implements ListOfCapturedCreatures, GoBack
 
         this.cardPanel = cardPanel;
         this.cardLayout = cardLayout;
-        this.changeActiveCreatureViewPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 50)); // Adjust the vertical gap
-        this.selectBtns = new ArrayList<>();
+        this.changeActiveCreatureViewPanel = new JPanel();
+        this.changeActiveCreatureViewPanel.setLayout(new BoxLayout(changeActiveCreatureViewPanel, BoxLayout.Y_AXIS));
 
-        cardPanel.add(changeActiveCreatureViewPanel, "Change Active Creature Panel");
+        JScrollPane scrollPane = new JScrollPane(changeActiveCreatureViewPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        cardPanel.add(scrollPane, "Change Active Creature Panel");
     }
 
-       public void initializeUI() {
+    public void initializeUI() {
 
         // Clear existing components
         changeActiveCreatureViewPanel.removeAll();
 
-        // Create a panel for the title label
+        // Reinitialize the select btns
+        this.selectBtns = new ArrayList<>();
+
         JPanel titleLabelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        titleLabelPanel.setBackground(Color.LIGHT_GRAY);
-
-        // Add a general label with a decent-sized font and centered
+        titleLabelPanel.setBackground(Color.BLUE);
         JLabel titleLabel = new JLabel("Change Active Creature");
-        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24)); // Adjust font size and style
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 24)); 
+        titleLabel.setForeground(Color.WHITE);
         titleLabelPanel.add(titleLabel);
-        changeActiveCreatureViewPanel.add(titleLabelPanel); 
 
+        // Wrap titleLabelPanel in another panel with BoxLayout
+        JPanel wrappedPanel = new JPanel();
+        wrappedPanel.setLayout(new BoxLayout(wrappedPanel, BoxLayout.Y_AXIS));
+        wrappedPanel.add(titleLabelPanel);
+
+        // Set maximum size to create a fixed height
+        wrappedPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+
+        changeActiveCreatureViewPanel.add(wrappedPanel);
+
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(25, 135, 15, 135)); 
+
+        activeCreatureLabel = new JLabel("Current active creature: " + activeCreature);
+        activeCreatureLabel.setFont(new Font("SansSerif", Font.BOLD, 14));   
+        headerPanel.add(activeCreatureLabel);
+        
         goBackToInventoryMenuBtn = new JButton("Go back to inventory menu");
-        changeActiveCreatureViewPanel.add(goBackToInventoryMenuBtn);
-
-        JLabel activeCreatureLabel = new JLabel("Current active creature: " + activeCreature);
-        changeActiveCreatureViewPanel.add(activeCreatureLabel);
-
+        goBackToInventoryMenuBtn.setOpaque(true);
+        goBackToInventoryMenuBtn.setBorderPainted(false);
+        goBackToInventoryMenuBtn.setBackground(Color.RED);
+        goBackToInventoryMenuBtn.setForeground(Color.WHITE);
+        goBackToInventoryMenuBtn.setMargin(new Insets(10, 5, 10, 5));
+        goBackToInventoryMenuBtn.setPreferredSize(new Dimension(250, 30));
+        headerPanel.add(goBackToInventoryMenuBtn);
+        
+        changeActiveCreatureViewPanel.add(headerPanel);
+        
         for (ArrayList<Object> obj : listOfCapturedCreatures) {
-            JPanel creaturePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 50, 5)); // Center the components
+            JPanel outerPanel = new JPanel();
+            outerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 15)); 
+
+            JPanel creaturePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 75, 25)); 
             creaturePanel.setBackground(Color.LIGHT_GRAY);
 
             // Add placeholder image to the left panel
@@ -63,11 +92,16 @@ public class ChangeActiveCreatureView implements ListOfCapturedCreatures, GoBack
             labelsPanel.setLayout(new BoxLayout(labelsPanel, BoxLayout.Y_AXIS)); // Use BoxLayout for vertical alignment
 
             // Add padding to the labelsPanel
-            int padding = 10;
+            int padding = 25;
             labelsPanel.setBorder(BorderFactory.createEmptyBorder(padding, padding, padding, padding));
 
             JButton selectBtn = new JButton("Select");
             selectBtns.add(selectBtn);
+
+            selectBtn.setOpaque(true);
+            selectBtn.setBorderPainted(false);
+            selectBtn.setBackground(Color.ORANGE);
+            selectBtn.setForeground(Color.WHITE);
 
             labelsPanel.add(new JLabel("Name: " + obj.get(0)));
             labelsPanel.add(new JLabel("Type: " + obj.get(1)));
@@ -77,8 +111,8 @@ public class ChangeActiveCreatureView implements ListOfCapturedCreatures, GoBack
 
             creaturePanel.add(labelsPanel); // Add labelsPanel to the creaturePanel
 
-            // Add creaturePanel to the main panel
-            changeActiveCreatureViewPanel.add(creaturePanel);
+            outerPanel.add(creaturePanel);
+            changeActiveCreatureViewPanel.add(outerPanel);
         }
     }
 
@@ -102,6 +136,10 @@ public class ChangeActiveCreatureView implements ListOfCapturedCreatures, GoBack
 
     public void setSelectBtnActionListener(ActionListener actionListener, int index) {
         this.selectBtns.get(index).addActionListener(actionListener);
+    }
+
+    public void updateActiveCreatureLabel() {
+        activeCreatureLabel.setText("Current active creature: " + activeCreature);
     }
 
 }
