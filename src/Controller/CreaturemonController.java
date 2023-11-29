@@ -2,6 +2,8 @@ package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Action;
 
@@ -44,6 +46,7 @@ public class CreaturemonController {
 						break;
 					case "ChocowoolBtn":
 						System.out.println("User chose Chocowool!");
+						creaturemonModel.addCreatureToInventory("Chocowool");
 						creaturemonModel.addCreatureToInventory("Chocowool");
 						break;
 					case "ParfwitBtn":
@@ -159,15 +162,17 @@ public class CreaturemonController {
 				switch (actionCommand) {
 					case "areaTypeOneBtn":
 						System.out.println("User clicked Area Type One!");
-						// Add logic for handling Evolve Creatures action
+						creaturemonView.getAreaTypeOneView().setImageIcon(creaturemonModel.getInventory().getActiveCreature().getName(), String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
+						creaturemonView.getAreaTypeOneView().markCell();
+						creaturemonView.getAreaTypeOneView().showAreaTypeOneView();
 						break;
 					case "areaTypeTwoBtn":
 						System.out.println("User clicked Area Type Two!");
-						// Add logic for handling Evolve Creatures action
+						creaturemonView.getAreaTypeTwoView().showAreaTypeTwoView();
 						break;
 					case "areaTypeThreeBtn":
 						System.out.println("User clicked Area Type Three!");
-						// Add logic for handling Evolve Creatures action
+						creaturemonView.getAreaTypeThreeView().showAreaTypeThreeView();
 						break;
 					case "goBackToMainMenuBtn":
 						System.out.println("User clicked Go Back To Main Menu!");
@@ -211,7 +216,14 @@ public class CreaturemonController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("User clicked evolve button!");
-				creaturemonModel.getInventory().EvolveCreature(); // Try to evolve the creature
+
+				// Try to evolve the creature
+				if (creaturemonModel.getInventory().EvolveCreature()) {
+					creaturemonView.getMyCreaturesView().setListOfCapturedCreatures(creaturemonModel.getInventory().getListOfCapturedCreatures());
+					creaturemonView.getMyCreaturesView().initializeUI();
+					setMyCreaturesBtnsActionListener();
+					creaturemonView.getMyCreaturesView().showMyCreatures();
+				} 
 			}
 		});
 
@@ -223,6 +235,48 @@ public class CreaturemonController {
 				System.out.println("User clicked Go Back To Main Menu!");
 				creaturemonView.getMainMenuView().showMainMenu();
 			}
+		});
+
+		// Controls for area type 1
+		this.creaturemonView.getAreaTypeOneView().setAreaTypeOneViewKeyListener(new KeyListener() {
+			
+			@Override
+            public void keyTyped(KeyEvent e) {
+                
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+				try {
+				
+					if (e.getKeyChar() == 'a' || e.getKeyCode() == KeyEvent.VK_LEFT) {
+						System.out.println("I moved left!");
+						int newCurPos = creaturemonView.getAreaTypeOneView().getCurPos() - 1;
+						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeOneView().markCell();
+
+					} else if (e.getKeyChar() == 'd' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+						System.out.println("I moved right!");
+						int newCurPos = creaturemonView.getAreaTypeOneView().getCurPos() + 1;
+						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
+						creaturemonView.getAreaTypeOneView().markCell();
+					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+						creaturemonView.getAreaTypeOneView().setCurPos(0);
+						creaturemonView.getMainMenuView().showMainMenu();
+					}
+
+				} catch (IndexOutOfBoundsException ex) {
+					System.err.println("IndexOutOfBoundsException: " + ex.getMessage());
+					System.err.println("Invalid index after moving right: " + creaturemonView.getAreaTypeOneView().getCurPos());
+				}
+				
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+               
+            }
 		});
 	}
 
@@ -272,9 +326,11 @@ public class CreaturemonController {
 			@Override 
 			public void actionPerformed(ActionEvent e) {
 				String actionCommand = e.getActionCommand();
-				creaturemonModel.getInventory().setSelectedCreature1(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)));
-				creaturemonView.getEvolveCratureView().setCreatureImage1(creaturemonModel.getInventory().getSelectedCreature1().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature1().getEvolutionLevel()));
-				selectCreatureView1.closeFrame();
+
+				if (creaturemonModel.getInventory().setSelectedCreature1(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)))) {
+					creaturemonView.getEvolveCratureView().setCreatureImage1(creaturemonModel.getInventory().getSelectedCreature1().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature1().getEvolutionLevel()));
+					selectCreatureView1.closeFrame();
+				}
 			}
 		});
 	}
@@ -288,9 +344,11 @@ public class CreaturemonController {
 			public void actionPerformed(ActionEvent e) {
 
 				String actionCommand = e.getActionCommand();
-				creaturemonModel.getInventory().setSelectedCreature2(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)));
-				creaturemonView.getEvolveCratureView().setCreatureImage2(creaturemonModel.getInventory().getSelectedCreature2().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature2().getEvolutionLevel()));
-				selectCreatureView2.closeFrame();
+
+				if (creaturemonModel.getInventory().setSelectedCreature2(creaturemonModel.getInventory().getCapturedCreatures().get(Integer.parseInt(actionCommand)))) {
+					creaturemonView.getEvolveCratureView().setCreatureImage2(creaturemonModel.getInventory().getSelectedCreature2().getName(), String.valueOf(creaturemonModel.getInventory().getSelectedCreature2().getEvolutionLevel()));
+					selectCreatureView2.closeFrame();
+				}
 			}
 		});
 	}

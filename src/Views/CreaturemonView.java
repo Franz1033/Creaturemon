@@ -17,6 +17,10 @@ public class CreaturemonView extends JFrame {
     private MyCreaturesView myCreaturesView;
     private ChangeActiveCreatureView changeActiveCreatureView;
 
+    private AreaTypeOneView areaTypeOneView;
+    private AreaTypeTwoView areaTypeTwoView;
+    private AreaTypeThreeView areaTypeThreeView;
+
     private CardLayout cardLayout;
     private JPanel cardPanel;
 
@@ -34,6 +38,10 @@ public class CreaturemonView extends JFrame {
 
         this.myCreaturesView = new MyCreaturesView(cardPanel, cardLayout);
         this.changeActiveCreatureView = new ChangeActiveCreatureView(cardPanel, cardLayout);
+
+        this.areaTypeOneView = new AreaTypeOneView(cardPanel, cardLayout);
+        this.areaTypeTwoView = new AreaTypeTwoView(cardPanel, cardLayout);
+        this.areaTypeThreeView = new AreaTypeThreeView(cardPanel, cardLayout);
 
         add(cardPanel);
     
@@ -69,6 +77,18 @@ public class CreaturemonView extends JFrame {
 
     public ChangeActiveCreatureView getChangeActiveCreatureView() {
         return this.changeActiveCreatureView;
+    }
+
+    public AreaTypeOneView getAreaTypeOneView() {
+        return this.areaTypeOneView;
+    }
+
+    public AreaTypeTwoView getAreaTypeTwoView() {
+        return this.areaTypeTwoView;
+    }
+
+    public AreaTypeThreeView getAreaTypeThreeView() {
+        return this.areaTypeThreeView;
     }
 
 }

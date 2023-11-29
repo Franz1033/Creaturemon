@@ -56,21 +56,25 @@ public class Inventory {
         System.out.println(creature.getName() + " (" + creature + ") has been set to active creature!");
     }
 
-    public void setSelectedCreature1(Creature selectedCreature1) {
+    public boolean setSelectedCreature1(Creature selectedCreature1) {
         if (selectedCreature2 == selectedCreature1) {
             System.out.println("You can't set same creature object!");
+            return false;
         } else {
             this.selectedCreature1 = selectedCreature1;
             System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") has been set as creature 1!");
+            return true;
         }
     }
 
-    public void setSelectedCreature2(Creature selectedCreature2) {
+    public boolean setSelectedCreature2(Creature selectedCreature2) {
         if (selectedCreature2 == selectedCreature1) {
             System.out.println("You can't set same creature object!");
+            return false;
         } else {
             this.selectedCreature2 = selectedCreature2;
             System.out.println(selectedCreature2.getName() + " (" + selectedCreature2 + ") has been set as creature 2!");
+            return true;
         }
     }
 
@@ -83,20 +87,24 @@ public class Inventory {
     }
 
 
-    public void EvolveCreature() {
+    public boolean EvolveCreature() {
 
         // If neither of the selected creatures has been initialized
         if (selectedCreature1 == null || selectedCreature2 == null) {
             System.out.println("You didn't fully select creatures yet!");
+            return false;
         // If creatures don't have the same family
         } else if (!selectedCreature1.getFamily().equals(selectedCreature2.getFamily())) {
             System.out.println("Creatures don't have the same family!");
+            return false;
         // If creatures don't have the same level
         } else if (selectedCreature1.getEvolutionLevel() != selectedCreature2.getEvolutionLevel()) {
             System.out.println("Creatures don't have the same level!");
+            return false;
         // If one or both of the creatures is already maxed
         } else if (selectedCreature1.getEvolutionLevel() == 3 || selectedCreature2.getEvolutionLevel() == 3) {
             System.out.println("One or both of the creatures is already maxed!");
+            return false;
         } else {
 
             Creature evolvedCreature = null;
@@ -122,6 +130,8 @@ public class Inventory {
             capturedCreatures.remove(selectedCreature2);
             System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") and " + selectedCreature2.getName() + " (" +
                                selectedCreature2 + ") has now been removed from the inventory!");
+            
+            return true;
         }
 
     }
