@@ -137,6 +137,9 @@ public class Inventory {
             System.out.println(selectedCreature1.getName() + " (" + selectedCreature1 + ") and " + selectedCreature2.getName() + " (" +
                                selectedCreature2 + ") has now been removed from the inventory!");
 
+            selectedCreature1 = null;
+            selectedCreature2 = null;
+
             // Set evolved creature as active
             setActiveCreature(evolvedCreature);
             

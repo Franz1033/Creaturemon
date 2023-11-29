@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
+import Exceptions.CreatureAlertException;
 import Exceptions.OutOfBoundsMovementException;
 import Model.Creature;
 import Model.CreaturemonModel;
@@ -311,6 +312,10 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
 					creaturemonView.getAreaTypeOneView().markCell();
+				} catch (CreatureAlertException e1) {
+					System.out.println("You encountereed a creature!");
+					creaturemonModel.getArea1().handleCreatureEncounter();
+					creaturemonModel.getArea1().getBattlePhase();
 				}
 				
             }
@@ -368,6 +373,9 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
+				} catch (CreatureAlertException e1) {
+					creaturemonModel.getArea2().handleCreatureEncounter();
+					creaturemonModel.getArea2().getBattlePhase();
 				} 
 				
             }
@@ -425,6 +433,9 @@ public class CreaturemonController {
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
+				} catch (CreatureAlertException e1) {
+					creaturemonModel.getArea3().handleCreatureEncounter();
+					creaturemonModel.getArea3().getBattlePhase();
 				} 
 				
             }
