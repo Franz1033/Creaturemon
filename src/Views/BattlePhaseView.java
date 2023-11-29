@@ -25,6 +25,8 @@ public class BattlePhaseView {
     JButton catchButton;
     JButton runButton;
 
+    private String enemyHealth;
+
     public BattlePhaseView(JPanel cardPanel, CardLayout cardLayout) {
 
         this.cardPanel = cardPanel;
@@ -49,22 +51,27 @@ public class BattlePhaseView {
     }
 
     public void createAndShowGUI() {
+
+        battlePhaseViewPanel.removeAll();
     
-        activeCreaturePanel = createCreaturePanel(activeCreatureName, activeCreatureLvl);
-        enemyCreaturePanel = createCreaturePanel(enemyCreatureName, enemyCreatureLvl);
+        activeCreaturePanel = createCreaturePanel(activeCreatureName, activeCreatureLvl, "NE");
+        enemyCreaturePanel = createCreaturePanel(enemyCreatureName, enemyCreatureLvl, "E");
         controlPanel = createControlPanel();
     
         battlePhaseViewPanel.add(activeCreaturePanel, BorderLayout.WEST);
         battlePhaseViewPanel.add(enemyCreaturePanel, BorderLayout.EAST);
         battlePhaseViewPanel.add(controlPanel, BorderLayout.SOUTH);
+
+        battlePhaseViewPanel.revalidate();
+        battlePhaseViewPanel.repaint();
     }
 
-    private JPanel createCreaturePanel(String creatureName, String evolutionLevel) {
+    private JPanel createCreaturePanel(String creatureName, String evolutionLevel, String E) {
         JPanel creaturePanel = new JPanel(new GridBagLayout());
         creaturePanel.setPreferredSize(new Dimension(200, 100)); // Set fixed size
     
         // Replace these paths with the actual paths to your creature images
-        ImageIcon creatureImage = new ImageIcon("media/lvl1_creatures/Chocowool.png");
+        ImageIcon creatureImage = new ImageIcon("media/lvl" + evolutionLevel + "_creatures/" + creatureName + ".png");
         JLabel imageLabel = new JLabel(creatureImage);
     
         JLabel nameLabel = new JLabel("Name: " + creatureName);
@@ -82,8 +89,18 @@ public class BattlePhaseView {
     
         gbc.gridy = 2;
         creaturePanel.add(evolutionLabel, gbc);
+
+        if (E.equals("E")) {
+            JLabel enemyHealthLabel = new JLabel("Enemy health: " + enemyHealth);
+            gbc.gridy = 3;
+            creaturePanel.add(enemyHealthLabel, gbc);
+        }
     
         return creaturePanel;
+    }
+
+    public void setEnemyHealth(String enemyHealth) {
+        this.enemyHealth = enemyHealth;
     }
     
     private JPanel createControlPanel() {

@@ -37,7 +37,7 @@ public class BattlePhase {
     /**
      * The number of actions the player has left in the battle.
      */
-    private int actionsLeft;
+    private int actionsLeft = 3;
 
     /**
      * Constructs a BattlePhase object for a battle with an enemy creature.
@@ -61,12 +61,13 @@ public class BattlePhase {
      * Displays the battle phase to the player, including available actions and creature information.
      */
     public void displayBattlePhase(int nOpt) {
-        while (actionsLeft > 0) {
+       
             // Initiate attack
-            if (nOpt == 1) 
+            if (nOpt == 1) {
                 attack(inventory.getActiveCreature());
+                System.out.println("I att: " + actionsLeft);
             // Swap active creature
-            else if (nOpt == 2) 
+            } else if (nOpt == 2) 
                 swap();
             // Try to capture the creature
             else if (nOpt == 3) 
@@ -78,12 +79,12 @@ public class BattlePhase {
                 System.out.println();
                 //area.displayActiveArea();
             }
-        }
-
-        System.out.println();
-        System.out.println(getEnemyCreature().getName() + " Runs Away!!");
-        System.out.println();
-
+     
+         if (actionsLeft < 0)   {
+            System.out.println();
+            System.out.println(getEnemyCreature().getName() + " Runs Away!!");
+            System.out.println();
+         }
         //area.displayActiveArea();
     }
 
@@ -183,5 +184,9 @@ public class BattlePhase {
 
         selectedCreature = enemyCreatures.get(randomIndex);
         enemyCreature = new Creature(selectedCreature.getName(), selectedCreature.getType(), selectedCreature.getFamily(), selectedCreature.getEvolutionLevel());
+    }
+
+    public int getActionsLeft() {
+        return this.actionsLeft;
     }
 }

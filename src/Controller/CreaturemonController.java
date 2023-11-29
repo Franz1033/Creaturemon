@@ -319,6 +319,7 @@ public class CreaturemonController {
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
 																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
 					setBattlePhaseViewActionListener();
@@ -386,6 +387,7 @@ public class CreaturemonController {
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
 																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
 					setBattlePhaseViewActionListener();
@@ -453,6 +455,7 @@ public class CreaturemonController {
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
 																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
 					setBattlePhaseViewActionListener();
@@ -576,6 +579,7 @@ public class CreaturemonController {
 					case "runBtn":
 						System.out.println("Run button clicked!");
 						creaturemonModel.getBattlePhase().displayBattlePhase(4);
+						creaturemonView.getMainMenuView().showMainMenu();
 						break;
 			
 					default:
