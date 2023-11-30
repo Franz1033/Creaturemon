@@ -290,25 +290,28 @@ public class CreaturemonController {
 				creaturemonView.getAreaTypeOneView();
 
 				int curPos = creaturemonView.getAreaTypeOneView().getCurPos();
+				int newCurPos = 0;
 
 				try {
 				
 					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
 						System.out.println("I moved left!");
-						creaturemonModel.getArea1().displayActiveArea('a');
-						int newCurPos = curPos - 1;
+						newCurPos = curPos - 1;
 						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeOneView().markCell();
+						creaturemonModel.getArea1().displayActiveArea('a');
 					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						System.out.println("I moved right!");
-						creaturemonModel.getArea1().displayActiveArea('d');
-						int newCurPos = curPos + 1;
+						newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeOneView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeOneView().markCell();
+						creaturemonModel.getArea1().displayActiveArea('d');
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-						creaturemonView.getAreaTypeOneView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
+				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
+					creaturemonView.getAreaTypeOneView().markCell();
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
 					creaturemonView.getAreaTypeOneView().markCell();
@@ -318,7 +321,7 @@ public class CreaturemonController {
 					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
-																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+																                     String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
@@ -346,37 +349,40 @@ public class CreaturemonController {
 				creaturemonView.getAreaTypeTwoView();
 
 				int curPos = creaturemonView.getAreaTypeTwoView().getCurPos();
+				int newCurPos = 0;
 
 				try {
 				
 					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
 						System.out.println("I moved left!");
-						creaturemonModel.getArea2().displayActiveArea('a');
-						int newCurPos = curPos - 1;
+						newCurPos = curPos - 1;
 						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeTwoView().markCell();
+						creaturemonModel.getArea2().displayActiveArea('a');
 					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						System.out.println("I moved right!");
-						creaturemonModel.getArea2().displayActiveArea('d');
-						int newCurPos = curPos + 1;
+						newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeTwoView().markCell();
+						creaturemonModel.getArea2().displayActiveArea('d');
 					} else if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W' || e.getKeyCode() == KeyEvent.VK_UP) {
 						System.out.println("I moved up!");
-						creaturemonModel.getArea2().displayActiveArea('w');
-						int newCurPos = curPos - 3;
+						newCurPos = curPos - 3;
 						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeTwoView().markCell(); 
+						creaturemonModel.getArea2().displayActiveArea('w');
 					} else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S' || e.getKeyCode() == KeyEvent.VK_DOWN) {
 						System.out.println("I moved down!");
-						creaturemonModel.getArea2().displayActiveArea('s');
-						int newCurPos = curPos + 3;
+						newCurPos = curPos + 3;
 						creaturemonView.getAreaTypeTwoView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeTwoView().markCell();
+						creaturemonModel.getArea2().displayActiveArea('s');
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-						creaturemonView.getAreaTypeTwoView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
+				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
+					creaturemonView.getAreaTypeOneView().markCell();
 				} catch (OutOfBoundsMovementException ex) {
 					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
 					creaturemonView.getAreaTypeTwoView().markCell();
@@ -386,7 +392,7 @@ public class CreaturemonController {
 					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
-																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+																                     String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
@@ -415,46 +421,49 @@ public class CreaturemonController {
 				creaturemonView.getAreaTypeThreeView();
 
 				int curPos = creaturemonView.getAreaTypeThreeView().getCurPos();
+				int newCurPos = 0;
 
 				try {
 					if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A' || e.getKeyCode() == KeyEvent.VK_LEFT) {
 						System.out.println("I moved left!");
-						creaturemonModel.getArea3().displayActiveArea('a');
-						int newCurPos = curPos - 1;
+						newCurPos = curPos - 1;
 						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeThreeView().markCell();
+						creaturemonModel.getArea3().displayActiveArea('a');
 					} else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D' || e.getKeyCode() == KeyEvent.VK_RIGHT) {
 						System.out.println("I moved right!");
-						creaturemonModel.getArea3().displayActiveArea('d');
-						int newCurPos = curPos + 1;
+						newCurPos = curPos + 1;
 						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeThreeView().markCell();
+						creaturemonModel.getArea3().displayActiveArea('d');
 					} else if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W' || e.getKeyCode() == KeyEvent.VK_UP) {
 						System.out.println("I moved up!");
-						creaturemonModel.getArea3().displayActiveArea('w');
-						int newCurPos = curPos - 4;
+						newCurPos = curPos - 4;
 						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeThreeView().markCell();
+						creaturemonModel.getArea3().displayActiveArea('w');
 					} else if (e.getKeyChar() == 's' || e.getKeyChar() == 'S' || e.getKeyCode() == KeyEvent.VK_DOWN) {
 						System.out.println("I moved down!");
-						creaturemonModel.getArea3().displayActiveArea('s');
-						int newCurPos = curPos + 4;
+						newCurPos = curPos + 4;
 						creaturemonView.getAreaTypeThreeView().setCurPos(newCurPos);
 						creaturemonView.getAreaTypeThreeView().markCell();
+						creaturemonModel.getArea3().displayActiveArea('s');
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-						creaturemonView.getAreaTypeThreeView().setCurPos(0);
 						creaturemonView.getMainMenuView().showMainMenu();
 					}
 
+				} catch (IndexOutOfBoundsException ex) {
+					creaturemonView.getAreaTypeOneView().setCurPos(curPos);
+					creaturemonView.getAreaTypeOneView().markCell();
 				} catch (OutOfBoundsMovementException ex) {
-					creaturemonView.getAreaTypeTwoView().setCurPos(curPos);
-					creaturemonView.getAreaTypeTwoView().markCell();
-				} catch (CreatureAlertException e1) {
+					creaturemonView.getAreaTypeThreeView().setCurPos(curPos);
+					creaturemonView.getAreaTypeThreeView().markCell();
+				} catch (CreatureAlertException e1) {					
 					creaturemonModel.createBattlePhase(3);
 					creaturemonView.getBattlePhaseView().setEnemyCreatureNameAndLvl(creaturemonModel.getBattlePhase().getEnemyCreature().getName(),
 																					String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setActiveCreatureNameAndLvl(creaturemonModel.getInventory().getActiveCreature().getName(),
-																                     String.valueOf(creaturemonModel.getBattlePhase().getEnemyCreature().getEvolutionLevel()));
+																                     String.valueOf(creaturemonModel.getInventory().getActiveCreature().getEvolutionLevel()));
 					creaturemonView.getBattlePhaseView().setEnemyHealth(String.valueOf(creaturemonModel.getBattlePhase().getEnemyHealth()));
 					creaturemonView.getBattlePhaseView().createAndShowGUI();
 					creaturemonView.getBattlePhaseView().showBattlePhaseView();
