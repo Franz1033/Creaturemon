@@ -62,6 +62,7 @@ public class BattlePhase {
      */
     public void displayBattlePhase(int nOpt) {
        
+        if (actionsLeft > 0) {
             // Initiate attack
             if (nOpt == 1) {
                 attack(inventory.getActiveCreature());
@@ -77,15 +78,15 @@ public class BattlePhase {
                 System.out.println();
                 System.out.println("Player Runs Away");
                 System.out.println();
-                //area.displayActiveArea();
+                area.displayAreaGrid();
             }
-     
-         if (actionsLeft < 0)   {
+        } 
+        
+        if (actionsLeft == 0) {
             System.out.println();
             System.out.println(getEnemyCreature().getName() + " Runs Away!!");
             System.out.println();
-         }
-        //area.displayActiveArea();
+        }
     }
 
     /**

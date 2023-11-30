@@ -128,7 +128,7 @@ public class CreaturemonModel {
         Creature creature21 = new Creature("Parfelure", "Fire", "C", 3);
         Creature creature22 = new Creature("Fudgasaur", "Grass", "D", 3);
         Creature creature23 = new Creature("Croberry", "Grass", "E", 3);
-        Creature creature24 = new Creature("Velvevor", "Grass", "F", 3);
+        Creature creature24 = new Creature("Velvevoir", "Grass", "F", 3);
         Creature creature25 = new Creature("Piestoise", "Water", "G", 3);
         Creature creature26 = new Creature("Icesundae", "Water", "H", 3);
         Creature creature27 = new Creature("Samurcone", "Water", "I", 3);

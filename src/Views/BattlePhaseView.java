@@ -66,11 +66,10 @@ public class BattlePhaseView {
         battlePhaseViewPanel.repaint();
     }
 
-    private JPanel createCreaturePanel(String creatureName, String evolutionLevel, String E) {
+    private JPanel createCreaturePanel(String creatureName, String evolutionLevel, String indicator) {
         JPanel creaturePanel = new JPanel(new GridBagLayout());
         creaturePanel.setPreferredSize(new Dimension(200, 100)); // Set fixed size
     
-        // Replace these paths with the actual paths to your creature images
         ImageIcon creatureImage = new ImageIcon("media/lvl" + evolutionLevel + "_creatures/" + creatureName + ".png");
         JLabel imageLabel = new JLabel(creatureImage);
     
@@ -90,10 +89,14 @@ public class BattlePhaseView {
         gbc.gridy = 2;
         creaturePanel.add(evolutionLabel, gbc);
 
-        if (E.equals("E")) {
+        if (indicator.equals("E")) {
             JLabel enemyHealthLabel = new JLabel("Enemy health: " + enemyHealth);
             gbc.gridy = 3;
             creaturePanel.add(enemyHealthLabel, gbc);
+        } else if (indicator.equals("NE")) {
+            JLabel actionsLeftLabel = new JLabel("Actions left: 3");
+            gbc.gridy = 4;
+            creaturePanel.add(actionsLeftLabel, gbc);
         }
     
         return creaturePanel;
